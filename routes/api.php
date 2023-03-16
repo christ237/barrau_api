@@ -18,6 +18,10 @@ use Illuminate\Support\Facades\Route;
 
 
 
+// Contributions
+
+Route::post('/contributions', [PaymentController::class, 'store']);
+
 
 // Public routes
 
@@ -26,16 +30,10 @@ Route::post('/login', [AdminController::class, 'login']);
 Route::post('/lawyers/login', [LawyerController::class, 'login']);
 
 Route::post('/lawyers/lawyerByLocation', [LawyerController::class, 'lawyertown']);
-
-
-
 Route::post('/lawyers/updatePassword', [LawyerController::class, 'updatePassword']);
-
 Route::post('/lawyers/update', [LawyerController::class, 'update']);
 
-
 Route::post('/lawyers/profile', [LawyerController::class, 'show']);
-
 Route::post('/lawyers/contributions', [LawyerController::class, 'contributions']);
 Route::get('/lawyers', [LawyerController::class, 'index']);
 
@@ -48,5 +46,4 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
 
 Route::put('/lawyers/{id}', [LawyerController::class, 'update']);
-
 Route::post('/lawyers/payments', [PaymentController::class, 'store']);

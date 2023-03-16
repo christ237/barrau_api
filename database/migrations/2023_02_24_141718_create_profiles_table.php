@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('phone');
             $table->text('password')->nullable();
-            $table->string('email', 100);
+            $table->string('email', 100)->nullable();
             $table->timestamps();
         });
     }

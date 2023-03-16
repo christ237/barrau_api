@@ -12,17 +12,22 @@ class LawyerController extends Controller
 
     public function index(){
 
-
-        $profiles =
-  Profile::all();
-
-    foreach($profiles as $profile){
-        $matricule = $profile->matricule;
-        $matricule_hash  = bcrypt($matricule);
-        Profile::where('matricule', $matricule)->update(array('password' => $matricule_hash));
-    }
+     return $profiles = Profile::paginate(50);
 
     }
+
+
+  /*  public function inputPasswords(){
+
+        $profiles = Profile::all();
+
+        foreach($profiles as $profile){
+            $matricule = $profile->matricule;
+            $matricule_hash  = bcrypt($matricule);
+            Profile::where('matricule', $matricule)->update(array('password' => $matricule_hash));
+        }
+
+    }*/
 
 
 
@@ -31,19 +36,22 @@ class LawyerController extends Controller
         //validate fields
         $attrs = $request->validate([
             'password' => 'required|string',
-            'matricule' => 'required|min:2',
+            'matricule' => 'required|string',
 
         ]);
 
+       // Get profile with matricule
        $profile = Profile::where('matricule', $attrs['matricule'])->first();
 
 
+       // If user found with this matricule
+
        if($profile != null){
 
-
+        // Check if user already has a password
         if($profile->password != null){
 
-               // attempt login
+        // If user has a password, attemp to login
             if(!Auth::guard('profile')->attempt([
                 'matricule' => $request->matricule,
                 'password' => $attrs['password']
@@ -56,13 +64,14 @@ class LawyerController extends Controller
 
             return $profile;
 
-
            }
 
 
             return $profile;
 
        }
+
+       // If no user found with this matricule return this error
 
        return response([
         'message' => 'Invalid credentials.'
@@ -190,17 +199,11 @@ class LawyerController extends Controller
           //validate fields
           $attrs = $request->validate([
             'id'=> 'string',
-            'name'=> 'string',
-            'address'=> 'string',
-            'phone'=> 'string',
-            'email'=> 'string',
-            'image' => 'string'
-            
         ]);
 
 
         $image = $this->saveImage($request->image, 'profile_images');
-     
+
 
             $lawyer = Profile::find($attrs[ 'id']);
 
@@ -211,14 +214,31 @@ class LawyerController extends Controller
                 'message' => 'Lawyer not found.'
             ], 403);
         }
-           
+
+
+        if(strlen( $request->image) === 0){
+
             $lawyer->update([
-                'address'=> $attrs[ 'address'],
-                'name'=>  $attrs[ 'name'],
-                'phone'=> $attrs[ 'phone'],
-                'email'=> $attrs[ 'email'],
+                'address'=> $request->address,
+                'name'=>   $request->name,
+                'phone'=>  $request->phone,
+                'email'=>  $request->email
+            ]);
+        }else{
+            $lawyer->update([
+                'address'=> $request->address,
+                'name'=>   $request->name,
+                'phone'=>  $request->phone,
+                'email'=>  $request->email,
                 'image' => $image
             ]);
+
+        }
+
+
+
+
+
 
 
             return response([
