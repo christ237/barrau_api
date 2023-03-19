@@ -11,9 +11,24 @@ class LawyerController extends Controller
 
 
     public function index(){
+     return $profiles = Profile::paginate(200);
 
-     return $profiles = Profile::paginate(50);
+    }
 
+
+
+
+    public function search(Request $request){
+
+           //validate fields
+           $attrs = $request->validate([
+            'name' => 'required|string'
+
+        ]);
+
+         $profiles = Profile::where('name', 'like', '%'.$attrs['name'].'%')->paginate(20);
+
+        return response()->json($profiles, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
     }
 
 
@@ -194,8 +209,6 @@ class LawyerController extends Controller
      */
     public function update(Request $request)
     {
-
-
           //validate fields
           $attrs = $request->validate([
             'id'=> 'string',
@@ -235,11 +248,34 @@ class LawyerController extends Controller
 
         }
 
+            return response([
+                'message' => 'Updated Successfully!',
+                'lawyer' => $lawyer,
+            ], 200);
+    }
 
 
 
 
+    // Update lawyer phone
+    public function updateLawyerPhone(Request $request)
+    {
+          //validate fields
+          $attrs = $request->validate([
+            'id'=> 'string',
+        ]);
 
+    $lawyer = Profile::find($attrs[ 'id']);
+        if(! $lawyer)
+        {
+            return response([
+                'message' => 'Lawyer not found.'
+            ], 403);
+        }
+
+            $lawyer->update([
+                'phone'=>  $request->phone,
+            ]);
 
             return response([
                 'message' => 'Updated Successfully!',
@@ -247,6 +283,63 @@ class LawyerController extends Controller
             ], 200);
     }
 
+
+
+
+    // Update lawyer phone
+    public function updateLawyerEmail(Request $request)
+    {
+          //validate fields
+          $attrs = $request->validate([
+            'id'=> 'string',
+        ]);
+
+    $lawyer = Profile::find($attrs[ 'id']);
+        if(! $lawyer)
+        {
+            return response([
+                'message' => 'Lawyer not found.'
+            ], 403);
+        }
+
+            $lawyer->update([
+                'email'=>  $request->email,
+            ]);
+
+            return response([
+                'message' => 'Updated Successfully!',
+                'lawyer' => $lawyer,
+            ], 200);
+    }
+
+
+
+
+    // Update lawyer phone
+    public function updateLawyerAddress(Request $request)
+    {
+          //validate fields
+          $attrs = $request->validate([
+            'id'=> 'string',
+        ]);
+
+    $lawyer = Profile::find($attrs[ 'id']);
+        if(! $lawyer)
+        {
+            return response([
+                'message' => 'Lawyer not found.'
+            ], 403);
+        }
+
+            $lawyer->update([
+                'address'=>  $request->address,
+            ]);
+
+            return response([
+                'message' => 'Updated Successfully!',
+                'lawyer' => $lawyer,
+            ], 200);
+    }
 
 
 

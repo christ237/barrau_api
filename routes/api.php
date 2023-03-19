@@ -47,3 +47,14 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
 Route::put('/lawyers/{id}', [LawyerController::class, 'update']);
 Route::post('/lawyers/payments', [PaymentController::class, 'store']);
+
+
+// Lawyers
+
+
+// Update fields
+Route::post('/lawyers/update/phone', [LawyerController::class, 'updateLawyerPhone']);
+Route::post('/lawyers/update/email', [LawyerController::class, 'updateLawyerEmail']);
+Route::post('/lawyers/update/address', [LawyerController::class, 'updateLawyerAddress']);
+
+Route::post('/lawyers/search', [LawyerController::class, 'search']);
