@@ -56,5 +56,6 @@ Route::post('/lawyers/payments', [PaymentController::class, 'store']);
 Route::post('/lawyers/update/phone', [LawyerController::class, 'updateLawyerPhone']);
 Route::post('/lawyers/update/email', [LawyerController::class, 'updateLawyerEmail']);
 Route::post('/lawyers/update/address', [LawyerController::class, 'updateLawyerAddress']);
+Route::post('/lawyers/update/image', [LawyerController::class, 'updateLawyerPhoto']);
 
 Route::post('/lawyers/search', [LawyerController::class, 'search']);

@@ -204,6 +204,41 @@ class LawyerController extends Controller
 
     }
 
+
+        // Update lawyer image
+        public function updateLawyerPhoto(Request $request)
+        {
+              //validate fields
+              $attrs = $request->validate([
+                'id'=> 'string',
+            ]);
+
+        $lawyer = Profile::find($attrs[ 'id']);
+
+        $image = $this->saveImage($request->image, 'profile_images');
+
+            if( !$lawyer)
+            {
+                return response([
+                    'message' => 'Lawyer not found.'
+                ], 403);
+            }
+
+                $lawyer->update([
+                    'image'=>  $image,
+                ]);
+
+                return response([
+                    'message' => 'Updated Successfully!',
+                    'lawyer' => $lawyer,
+                ], 200);
+        }
+
+
+
+
+
+
     /**
      * Update the specified resource in storage.
      */
