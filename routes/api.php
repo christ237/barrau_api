@@ -27,7 +27,7 @@ Route::post('/contributions', [PaymentController::class, 'store']);
 
 Route::post('/register', [AdminController::class, 'register']);
 Route::post('/login', [AdminController::class, 'login']);
-Route::post('/lawyers/login', [LawyerController::class, 'login']);
+
 
 Route::post('/lawyers/lawyerByLocation', [LawyerController::class, 'lawyertown']);
 Route::post('/lawyers/updatePassword', [LawyerController::class, 'updatePassword']);
@@ -50,6 +50,12 @@ Route::post('/lawyers/payments', [PaymentController::class, 'store']);
 
 
 // Lawyers
+
+// Login
+Route::post('/lawyers/login', [LawyerController::class, 'login']);
+Route::post('/lawyers/getLawyer', [LawyerController::class, 'getProfile']);
+
+
 
 
 // Update fields

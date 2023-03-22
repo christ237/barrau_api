@@ -97,6 +97,36 @@ class LawyerController extends Controller
 
 
 
+
+    public function getProfile(Request $request)
+    {
+        //validate fields
+        $attrs = $request->validate([
+            'matricule' => 'required|string'
+        ]);
+
+       // Get profile with matricule
+       $profile = Profile::where('matricule', $attrs['matricule'])->first();
+
+
+       // If user found with this matricule
+
+       if($profile != null){
+
+            return $profile;
+
+       }
+
+       // If no user found with this matricule return this error
+
+       return response([
+        'message' => 'No profile found with this matricule!'
+    ], 403);
+
+
+    }
+
+
     public function lawyertown(Request $request){
 
         $attrs = $request->validate([
