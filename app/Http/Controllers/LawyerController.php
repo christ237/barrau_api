@@ -63,8 +63,6 @@ class LawyerController extends Controller
 
        if($profile != null){
 
-        // Check if user already has a password
-        if($profile->password != null){
 
         // If user has a password, attemp to login
             if(!Auth::guard('profile')->attempt([
@@ -79,10 +77,6 @@ class LawyerController extends Controller
 
             return $profile;
 
-           }
-
-
-            return $profile;
 
        }
 
