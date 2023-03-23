@@ -63,7 +63,6 @@ class LawyerController extends Controller
 
        if($profile != null){
 
-
         // If user has a password, attemp to login
             if(!Auth::guard('profile')->attempt([
                 'matricule' => $request->matricule,

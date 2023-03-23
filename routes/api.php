@@ -65,3 +65,14 @@ Route::post('/lawyers/update/address', [LawyerController::class, 'updateLawyerAd
 Route::post('/lawyers/update/image', [LawyerController::class, 'updateLawyerPhoto']);
 
 Route::post('/lawyers/search', [LawyerController::class, 'search']);
+
+
+
+Route::get('/navigate', function() {
+    return File::get(public_path() . '/.well-known/assetlinks.json');
+  });
+
+
+  Route::get('/mobile', function() {
+
+  });
