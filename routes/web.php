@@ -19,4 +19,4 @@ use App\Http\Controllers\HomeController;
 
 Route::get('/', [HomeController::class, 'getArticles']);
 
-Route::get('/mobile');
+Route::get('/mobile/{name}');
