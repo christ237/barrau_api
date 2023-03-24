@@ -68,7 +68,7 @@ Route::post('/lawyers/search', [LawyerController::class, 'search']);
 
 
 
-Route::get('/navigate', function() {
+Route::get('/navigate/{id}', function() {
     return File::get(public_path() . '/.well-known/assetlinks.json');
   });
 
