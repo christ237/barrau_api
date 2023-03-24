@@ -11,7 +11,7 @@ class LawyerController extends Controller
 
 
     public function index(){
-     return $profiles = Profile::paginate(200);
+     return $profiles = Profile::paginate(500);
 
     }
 
@@ -138,6 +138,7 @@ class LawyerController extends Controller
 
        return Payment::where('profile_id', '=', $attrs['id'])->get();
     }
+
 
     public function settled(){
 
