@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class LawyerController extends Controller
 {
 
+    public $image;
 
     public function index(){
      return $profiles = Profile::paginate(500);
@@ -17,6 +18,20 @@ class LawyerController extends Controller
 
 
 
+    public function uploadImage(Request $request){
+
+        $this->validate($request, [
+            'image' => 'required|image|mimes:jpg,png|max:2048',
+        ]);
+
+        $image_path = $request->file('image')->store('image', 'public');
+
+        $data = Image::create([
+            'image' => $image_path,
+        ]);
+
+        return response($data, Response::HTTP_CREATED);
+    }
 
     public function search(Request $request){
 
@@ -229,17 +244,66 @@ class LawyerController extends Controller
     }
 
 
+    public function upload(Request $request){
+
+
+          //validate fields
+          $attrs = $request->validate([
+            'id'=> 'string'
+        ]);
+
+      $lawyer = Profile::find($attrs[ 'id']);
+
+        $dir="profile_images/";
+        $image = $request->file('image');
+
+       if ($request->has('image')) {
+               $imageName = \Carbon\Carbon::now()->toDateString() . "-" . uniqid() . "." . "png";
+               if (!\Storage::disk('public')->exists($dir)) {
+                   \Storage::disk('public')->makeDirectory($dir);
+               }
+               \Storage::disk('public')->put($dir.$imageName, file_get_contents($image));
+       }else{
+            return response()->json(['message' => trans('/storage/profile_images/'.'def.png')], 200);
+       }
+
+       $userDetails = [
+           'image' => $imageName,
+       ];
+
+       if( !$lawyer)
+       {
+           return response([
+               'message' => 'Lawyer not found.'
+           ], 403);
+       }
+
+      // User::where(['id' => 27])->update($userDetails);
+
+      $lawyer->update([
+        'image'=> $imageName,
+    ]);
+
+    return response([
+        'message' => 'Updated Successfully!',
+        'lawyer' => $lawyer,
+    ], 200);
+
+       //return response()->json(['message' => trans('/storage/test/'.$imageName)], 200);
+   }
+
+
         // Update lawyer image
         public function updateLawyerPhoto(Request $request)
         {
               //validate fields
               $attrs = $request->validate([
-                'id'=> 'string',
+                'id'=> 'string'
             ]);
 
         $lawyer = Profile::find($attrs[ 'id']);
 
-        $image = $this->saveImage($request->image, 'profile_images');
+      //  $image = $this->saveImage($request->image, 'profile_images');
 
             if( !$lawyer)
             {
@@ -248,8 +312,18 @@ class LawyerController extends Controller
                 ], 403);
             }
 
+
+            $file = $request->file('image');
+            $imageName = time().'.'.$file->extension();
+            $imagePath = public_path(). '/files';
+
+            $file->move($imagePath, $imageName);
+
+           $doc =  "127.0.0.1:8000/storage/profile_images/".$file;
+
+
                 $lawyer->update([
-                    'image'=>  $image,
+                    'image'=>  $doc,
                 ]);
 
                 return response([

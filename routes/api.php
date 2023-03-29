@@ -63,9 +63,9 @@ Route::post('/lawyers/update/phone', [LawyerController::class, 'updateLawyerPhon
 Route::post('/lawyers/update/email', [LawyerController::class, 'updateLawyerEmail']);
 Route::post('/lawyers/update/address', [LawyerController::class, 'updateLawyerAddress']);
 Route::post('/lawyers/update/image', [LawyerController::class, 'updateLawyerPhoto']);
-
 Route::post('/lawyers/search', [LawyerController::class, 'search']);
 
+Route::post('/lawyers/image', [LawyerController::class, 'upload']);
 
 
 Route::get('/navigate/{id}', function() {
