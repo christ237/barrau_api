@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payment;
+use App\Models\contribution;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PDF;
 class LawyerController extends Controller
+
 {
 
     public $image;
@@ -15,6 +18,46 @@ class LawyerController extends Controller
      return $profiles = Profile::paginate(500);
 
     }
+
+
+    public function getAttestation(Request $request){
+        //validate fields
+          $attrs = $request->validate([
+              'email' => 'required|string'
+          ]);
+
+         // Get profile with matricule
+         $profile = Profile::where('email', $attrs['email'])->first();
+
+
+         $pdf = PDF::loadView('pdf_view',$profile->toArray());
+         // download PDF file with download method
+
+        //Storage::disk($path)->put($filename, base64_decode($image));
+         //return URL::to('/').'/storage/'.$path.'/'.$filename; */
+
+         $filename = $attrs['email']. time().'.pdf';
+
+        $content = $pdf->download()->getOriginalContent();
+
+
+       $path = \Storage::put('public/attestations/'.$filename,$pdf->output());
+
+
+
+      Profile::sendMail($profile, $pdf);
+
+       return response([
+          'message' => 'Added Successfully!',
+          'file' => $path,
+      ], 200);
+
+
+
+
+  }
+
+
 
 
 
@@ -32,6 +75,7 @@ class LawyerController extends Controller
 
         return response($data, Response::HTTP_CREATED);
     }
+
 
     public function search(Request $request){
 
@@ -151,7 +195,7 @@ class LawyerController extends Controller
             'id'=> 'string|required',
         ]);
 
-       return Payment::where('profile_id', '=', $attrs['id'])->get();
+       return contribution::where('profile_id', '=', $attrs['id'])->get();
     }
 
 

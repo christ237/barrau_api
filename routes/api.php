@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LawyerController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ContributionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 // Contributions
 
-Route::post('/contributions', [PaymentController::class, 'store']);
+Route::post('/contributions', [ContributionController::class, 'store']);
 
 
 // Public routes
@@ -76,3 +77,8 @@ Route::get('/navigate/{id}', function() {
   Route::get('/mobile', function() {
 
   });
+
+
+
+
+Route::post('/attestation', [LawyerController::class, 'getAttestation']);
