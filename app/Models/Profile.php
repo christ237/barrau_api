@@ -24,6 +24,7 @@ class Profile extends  Authenticatable
         'slug',
         'prestationDate',
         'password',
+        'is_upToDate',
         'image'
     ];
 
