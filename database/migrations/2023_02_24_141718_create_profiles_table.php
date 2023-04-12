@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('prestationDate');
             $table->string('address');
             $table->string('phone');
+            $table->boolean('is_upTODate')->default(0)->change();
             $table->text('password')->nullable();
             $table->string('email', 100)->nullable();
             $table->timestamps();
