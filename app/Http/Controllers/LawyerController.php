@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payment;
-use App\Models\contribution;
+use App\Models\Contribution;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +18,12 @@ class LawyerController extends Controller
      return $profiles = Profile::paginate(500);
 
     }
+
+    public function getAll(){
+        return $profiles = Profile::all();
+
+    }
+
 
 
     public function getAttestation(Request $request){

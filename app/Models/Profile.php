@@ -43,7 +43,6 @@ class Profile extends  Authenticatable
        \Storage::put($path,$pdf->output());
 
 
-
        $data['name'] = $employee->name;
        $data['email'] = $employee->email;
 

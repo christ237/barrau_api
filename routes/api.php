@@ -23,7 +23,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/contributions', [ContributionController::class, 'store']);
 
-
 // Public routes
 
 Route::post('/register', [AdminController::class, 'register']);
@@ -38,10 +37,10 @@ Route::post('/lawyers/profile', [LawyerController::class, 'show']);
 Route::post('/lawyers/contributions', [LawyerController::class, 'contributions']);
 Route::get('/lawyers', [LawyerController::class, 'index']);
 
+Route::get('/searchLawyers', [LawyerController::class, 'getAll']);
+
 Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::post('/lawyers', [LawyerController::class, 'store']);
-    Route::get('/lawyers/contributions/{id}', [LawyerController::class, 'contributions']);
-
 });
 
 
