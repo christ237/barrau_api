@@ -54,7 +54,11 @@ Route::post('/lawyers/payments', [PaymentController::class, 'store']);
 // Login
 Route::post('/lawyers/login', [LawyerController::class, 'login']);
 Route::post('/lawyers/getLawyer', [LawyerController::class, 'getProfile']);
+Route::post('/lawyers/checkPassword', [LawyerController::class, 'checkPassword']);
 
+// Security
+Route::post('/lawyers/grantLinkAccess', [LawyerController::class, 'grantLinkAccess']);
+Route::post('/lawyers/cardLost', [LawyerController::class, 'cardLost']);
 
 
 

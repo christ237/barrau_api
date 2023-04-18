@@ -5,10 +5,12 @@
         ],
         "target": {
             "namespace": "android_app",
-            "package_name": "com.example.untitled",
+            "package_name": "org.barreau.cameroon",
             "sha256_cert_fingerprints": [
                 "6A:88:58:E3:F7:D1:74:83:EB:52:4B:7F:BF:D5:8D:41:A5:44:16:21:77:09:E4:12:49:F2:7F:FB:FB:E2:55:DF"
             ]
         }
     }
 ]
+
+

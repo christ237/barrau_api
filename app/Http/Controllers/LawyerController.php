@@ -155,6 +155,114 @@ class LawyerController extends Controller
 
 
 
+    public function grantLinkAccess(Request $request){
+
+        $attrs = $request->validate([
+            'id' => 'required|string',
+            'grant_link_access_feature' => 'required|string',
+            'is_link_accessible' => 'required|string',
+        ]);
+
+
+        $lawyer = Profile::find($attrs[ 'id']);
+            if(! $lawyer)
+            {
+                return response([
+                    'message' => 'Lawyer not found.'
+                ], 403);
+            }
+
+                $lawyer->update([
+                    'grant_link_access_feature'=> $attrs[ 'grant_link_access_feature'] ,
+                    'is_link_accessible' => $attrs[ 'is_link_accessible']
+                ]);
+
+                return response([
+                    'message' => 'Updated Successfully!',
+                    'lawyer' => $lawyer,
+                ], 200);
+
+    }
+
+
+
+    public function cardLost(Request $request){
+
+        $attrs = $request->validate([
+            'id' => 'required|string',
+            'is_card_lost' => 'required|string',
+            'is_link_accessible' => 'required|string',
+        ]);
+
+
+        $lawyer = Profile::find($attrs[ 'id']);
+            if(! $lawyer)
+            {
+                return response([
+                    'message' => 'Lawyer not found.'
+                ], 403);
+            }
+
+                $lawyer->update([
+                    'is_card_lost'=> $attrs[ 'is_card_lost'],
+                    'is_link_accessible' => $attrs[ 'is_link_accessible']
+                ]);
+
+                return response([
+                    'message' => 'Updated Successfully!',
+                    'lawyer' => $lawyer,
+                ], 200);
+
+    }
+
+
+
+
+
+
+    public function checkPassword(Request $request)
+    {
+        //validate fields
+        $attrs = $request->validate([
+            'password' => 'required|string',
+            'matricule' => 'required|string',
+
+        ]);
+
+       // Get profile with matricule
+       $profile = Profile::where('matricule', $attrs['matricule'])->first();
+
+
+       // If user found with this matricule
+
+       if($profile != null){
+
+        // If user has a password, attemp to login
+            if(!Auth::guard('profile')->attempt([
+                'matricule' => $request->matricule,
+                'password' => $attrs['password']
+            ])){
+                return response([
+                    'message' => 'Invalid Password!'
+                ], 403);
+
+            }
+
+            return $profile;
+
+
+       }
+
+       // If no user found with this matricule return this error
+
+       return response([
+        'message' => 'Invalid Password!.'
+    ], 403);
+
+
+    }
+
+
 
     public function getProfile(Request $request)
     {

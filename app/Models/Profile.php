@@ -25,7 +25,10 @@ class Profile extends  Authenticatable
         'prestationDate',
         'password',
         'is_upToDate',
-        'image'
+        'image',
+        'grant_link_access_feature',
+        'is_link_accessible',
+        'is_card_lost'
     ];
 
 
