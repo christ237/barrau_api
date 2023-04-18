@@ -43,8 +43,6 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::post('/lawyers', [LawyerController::class, 'store']);
 });
 
-
-
 Route::put('/lawyers/{id}', [LawyerController::class, 'update']);
 Route::post('/lawyers/payments', [PaymentController::class, 'store']);
 
