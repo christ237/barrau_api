@@ -173,8 +173,8 @@ class LawyerController extends Controller
             }
 
                 $lawyer->update([
-                    'grant_link_access_feature'=> $attrs[ 'grant_link_access_feature'] ,
-                    'is_link_accessible' => $attrs[ 'is_link_accessible']
+                    'grant_link_access_feature'=> $request->grant_link_access_feature,
+                    'is_link_accessible' => $request->is_link_accessible
                 ]);
 
                 return response([
@@ -204,8 +204,8 @@ class LawyerController extends Controller
             }
 
                 $lawyer->update([
-                    'is_card_lost'=> $attrs[ 'is_card_lost'],
-                    'is_link_accessible' => $attrs[ 'is_link_accessible']
+                    'is_card_lost'=> $request->is_card_lost,
+                    'is_link_accessible' => $request->is_link_accessible
                 ]);
 
                 return response([
