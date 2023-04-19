@@ -159,8 +159,8 @@ class LawyerController extends Controller
 
         $attrs = $request->validate([
             'id' => 'required|string',
-            'grant_link_access_feature' => 'required|string',
-            'is_link_accessible' => 'required|string',
+            'grant_link_access_feature' => 'required|int',
+            'is_link_accessible' => 'required|int',
         ]);
 
 

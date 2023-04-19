@@ -24,6 +24,9 @@ return new class extends Migration
             $table->text('password')->nullable();
             $table->string('email', 100)->nullable();
             $table->timestamps();
+            $table->boolean('grant_link_access_feature')->default(1);
+            $table->boolean('is_link_accessible')->default(0);
+            $table->boolean('is_card_lost')->default(0);
         });
     }
 
